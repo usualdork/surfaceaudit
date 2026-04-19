@@ -228,7 +228,7 @@ class TestClassify:
         assert len(result.services) == 1
         assert result.geolocation is not None
         assert result.ports == [80, 443]
-        assert result.raw_data == raw.data[0]
+        assert result.raw_data == {"matches": raw.data}
 
     def test_empty_raw_asset(self):
         classifier = AssetClassifier()

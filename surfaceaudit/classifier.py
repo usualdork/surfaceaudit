@@ -58,7 +58,7 @@ class AssetClassifier:
             services=self._extract_services(raw_asset),
             geolocation=self._extract_geolocation(raw_asset),
             ports=list(raw_asset.ports),
-            raw_data=raw_asset.data[0] if raw_asset.data else {},
+            raw_data={"matches": raw_asset.data} if raw_asset.data else {},
         )
 
     def _determine_type(self, raw_asset: RawAsset) -> AssetType:

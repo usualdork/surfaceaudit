@@ -90,28 +90,19 @@ def scan(
         credits_before = data_provider.get_credits()
         ui.console.print(f"Available credits: {credits_before}")
 
-        # ---- Determine engine: use v2 if any v2-specific option is provided ----
-        use_v2 = bool(exclude_rules or filter_tags or min_severity)
-        engine_v2 = None
-        rule_engine = None
+        # ---- Load rule engine (always v2, with optional filters) ----
+        from surfaceaudit.rules.v2.engine import RuleEngineV2
 
-        if use_v2:
-            from surfaceaudit.rules.v2.engine import RuleEngineV2
-
-            engine_v2 = RuleEngineV2()
-            # Parse comma-separated filter values
-            exclude_ids = [r.strip() for r in exclude_rules.split(",")] if exclude_rules else None
-            tags_list = [t.strip() for t in filter_tags.split(",")] if filter_tags else None
-            dirs = [cfg.rules_dir] if cfg.rules_dir else None
-            engine_v2.load(
-                rules_dirs=dirs,
-                tags=tags_list,
-                min_severity=min_severity,
-                exclude_ids=exclude_ids,
-            )
-        else:
-            rule_engine = RuleEngine(rules_dir=cfg.rules_dir)
-            rule_engine.load()
+        engine_v2 = RuleEngineV2()
+        exclude_ids = [r.strip() for r in exclude_rules.split(",")] if exclude_rules else None
+        tags_list = [t.strip() for t in filter_tags.split(",")] if filter_tags else None
+        dirs = [cfg.rules_dir] if cfg.rules_dir else None
+        engine_v2.load(
+            rules_dirs=dirs,
+            tags=tags_list,
+            min_severity=min_severity,
+            exclude_ids=exclude_ids,
+        )
 
         # ---- Discover with progress ----
         ui.console.print(f"Discovering assets for {len(cfg.targets)} target(s)…")
@@ -120,12 +111,12 @@ def scan(
         ui.console.print(f"Discovered {len(raw_assets)} raw asset(s).")
 
         # ---- Classify ----
-        classifier = AssetClassifier(rule_engine=rule_engine, engine_v2=engine_v2)
+        classifier = AssetClassifier(engine_v2=engine_v2)
         classified = [classifier.classify(ra) for ra in raw_assets]
         ui.display_classified_assets(classified)
 
         # ---- Assess ----
-        assessor = VulnerabilityAssessor(rule_engine=rule_engine, engine_v2=engine_v2)
+        assessor = VulnerabilityAssessor(engine_v2=engine_v2)
         assessed = [assessor.assess(ca) for ca in classified]
         ui.display_assessed_assets(assessed)
 

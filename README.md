@@ -22,7 +22,7 @@
 SurfaceAudit discovers, classifies, and assesses your internet-facing assets, enriches them with threat intelligence from 4 sources, monitors for changes, and generates AI-powered security reports — all from a single CLI command.
 
 ```
-pip install surfaceaudit
+pip install surfaceaudit          # coming soon — use git clone for now
 surfaceaudit scan --targets example.com --enrich --ai-key $GEMINI_API_KEY
 ```
 
@@ -51,7 +51,13 @@ Discover → Classify → Assess → Enrich → Monitor → Report (AI)
 ### Install
 
 ```bash
-pip install surfaceaudit
+# From source (recommended)
+git clone https://github.com/usualdork/surfaceaudit.git
+cd surfaceaudit
+pip install .
+
+# PyPI release coming soon
+# pip install surfaceaudit
 ```
 
 ### Set API Keys
@@ -87,8 +93,8 @@ Every scan produces:
 # SurfaceAudit Scan Report
 
 ## Executive Summary
-A recent external scan identified 23 web servers on the angel-one.vip domain.
-All assets are classified as high risk due to outdated Nginx versions below 1.20.
+A recent external scan identified 12 web servers across the example.com domain.
+3 assets are classified as high risk due to outdated Nginx versions below 1.20.
 Threat intelligence from VirusTotal, GreyNoise, and AbuseIPDB shows clean IP
 reputation across all sources...
 
@@ -294,14 +300,14 @@ surfaceaudit scan --targets example.com --enrich
 | Watch mode + alerts | ✅ | ❌ | ❌ | ❌ | ✅ |
 | SARIF / GitHub Security | ✅ | ❌ | ❌ | ❌ | ❌ |
 | pip install | ✅ | ❌ | ✅ | ✅ | ❌ |
-| Price | Free | Free | Free | $49-899/mo | Enterprise |
+| Price | Free | Free | Free | $49 one-time+ | Enterprise |
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, testing, and how to add rules or providers.
 
 ```bash
-git clone https://github.com/your-org/surfaceaudit.git
+git clone https://github.com/usualdork/surfaceaudit.git
 cd surfaceaudit
 pip install -e ".[dev]"
 pytest tests/  # 592 tests, 40 property-based

@@ -139,16 +139,16 @@ class TestScanV2Options:
 
     @patch("surfaceaudit.cli.ScanHistoryManager")
     @patch("surfaceaudit.cli.ProviderRegistry")
-    def test_scan_without_v2_options_uses_v1(self, mock_registry, mock_history_cls):
+    def test_scan_default_uses_v2_engine(self, mock_registry, mock_history_cls):
         _mock_setup(mock_registry, mock_history_cls)
-        with patch("surfaceaudit.cli.RuleEngine") as mock_v1_cls:
-            mock_v1 = MagicMock()
-            mock_v1.classify.return_value = AssetType.WEB_SERVER
-            mock_v1.assess.return_value = []
-            mock_v1_cls.return_value = mock_v1
+        with patch("surfaceaudit.rules.v2.engine.RuleEngineV2") as mock_v2_cls:
+            mock_v2 = MagicMock()
+            mock_v2.classify.return_value = AssetType.WEB_SERVER
+            mock_v2.assess.return_value = []
+            mock_v2_cls.return_value = mock_v2
             r = CliRunner().invoke(main, ["scan", "--api-key", "k", "--targets", "example.com"])
             assert r.exit_code == 0, r.output
-            mock_v1.load.assert_called_once()
+            mock_v2.load.assert_called_once()
 
     @patch("surfaceaudit.cli._run_enrichment")
     @patch("surfaceaudit.cli.ScanHistoryManager")
