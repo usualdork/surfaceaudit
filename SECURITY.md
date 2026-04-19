@@ -6,7 +6,7 @@ If you discover a security vulnerability in SurfaceAudit, please report it respo
 
 **Do not open a public GitHub issue for security vulnerabilities.**
 
-Instead, email us at: **security@surfaceaudit.dev**
+Instead, email us at: **manish@noctrem.com**
 
 Include:
 
