@@ -1,0 +1,19 @@
+id: v2-cls-web-server
+info:
+  name: Web Server
+  author: surfaceaudit
+  severity: info
+  tags: [classification]
+  description: "Classifies asset as a web server based on ports and banner keywords"
+match:
+  condition: or
+  matchers:
+    - type: port
+      ports: [80, 443, 8080, 8443]
+    - type: word
+      field: banner
+      words: [http, nginx, apache]
+assess:
+  category: web_server
+  severity: info
+  description: "Asset classified as web server"

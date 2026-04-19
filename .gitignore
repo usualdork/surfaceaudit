@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
+
+# Environment variables
+.env
+
+# SurfaceAudit runtime data
+.scan_history/
+.surfaceaudit/
+surfaceaudit_report_*.md
+
+# Hypothesis test database
+.hypothesis/
+
+# pytest
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+.kiro/
+
+# OS
+.DS_Store
+
+# Scan output files (contain real scan data / API keys)
+scan_all_domains.json
+angelone_enriched_scan.json
+config_scan_*.json
+config_angelone_*.yaml
+ANGELONE_*.md

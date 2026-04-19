@@ -1,0 +1,19 @@
+id: v2-cls-network-device
+info:
+  name: Network Device
+  author: surfaceaudit
+  severity: info
+  tags: [classification]
+  description: "Classifies asset as a network device based on ports and banner keywords"
+match:
+  condition: or
+  matchers:
+    - type: port
+      ports: [161, 162]
+    - type: word
+      field: banner
+      words: [snmp, cisco, mikrotik]
+assess:
+  category: network_device
+  severity: info
+  description: "Asset classified as network device"

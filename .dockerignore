@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.hypothesis/
+.scan_history/
+.pytest_cache/
+.git/
+.github/
+.kiro/
+shodan_scanner/
+tests/
+*.md
+LICENSE
+.DS_Store
+.vscode/

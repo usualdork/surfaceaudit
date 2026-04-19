@@ -1,0 +1,16 @@
+id: v2-assess-risky-rdp
+info:
+  name: RDP Exposed
+  author: surfaceaudit
+  severity: medium
+  tags: [assessment, risky_port]
+  description: "Risky port 3389 (RDP) is open"
+match:
+  condition: and
+  matchers:
+    - type: port
+      ports: [3389]
+assess:
+  category: risky_port
+  severity: medium
+  description: "Risky port 3389 (RDP) is open"

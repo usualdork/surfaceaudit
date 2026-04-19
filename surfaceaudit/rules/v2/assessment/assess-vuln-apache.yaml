@@ -1,0 +1,21 @@
+id: v2-assess-vuln-apache
+info:
+  name: Outdated Apache HTTP Server
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, vulnerable_version, web]
+  description: "Apache HTTP Server version {service_version} is below 2.4.50"
+match:
+  condition: and
+  matchers:
+    - type: word
+      field: banner
+      words: [apache]
+    - type: version_compare
+      field: service_version
+      operator: lt
+      version: "2.4.50"
+assess:
+  category: vulnerable_version
+  severity: high
+  description: "Apache HTTP Server version {service_version} is below 2.4.50"

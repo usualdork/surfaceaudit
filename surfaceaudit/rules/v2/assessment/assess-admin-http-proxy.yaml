@@ -1,0 +1,16 @@
+id: v2-assess-admin-http-proxy
+info:
+  name: HTTP Proxy/Admin Exposed
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, admin_interface]
+  description: "Exposed admin interface on port 8080 (HTTP Proxy/Admin)"
+match:
+  condition: and
+  matchers:
+    - type: port
+      ports: [8080]
+assess:
+  category: admin_interface
+  severity: high
+  description: "Exposed admin interface on port 8080 (HTTP Proxy/Admin)"

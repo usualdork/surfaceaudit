@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurfaceAudit Scan Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; color: #333; }
+        h1, h2 { color: #1a1a2e; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 2rem; }
+        th, td { border: 1px solid #ccc; padding: 0.5rem 0.75rem; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .high { color: #d32f2f; font-weight: bold; }
+        .medium { color: #f57c00; font-weight: bold; }
+        .low { color: #388e3c; font-weight: bold; }
+        .meta-table { width: auto; }
+        .meta-table td:first-child { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>SurfaceAudit Scan Report</h1>
+
+    <h2>Scan Metadata</h2>
+    <table class="meta-table">
+        <tr><td>Timestamp</td><td>{{ report.metadata.timestamp }}</td></tr>
+        <tr><td>Query Parameters</td><td>{{ report.metadata.query_parameters | join(', ') }}</td></tr>
+        <tr><td>API Credits Used</td><td>{{ report.metadata.api_credits_used }}</td></tr>
+        <tr><td>Scan Duration (s)</td><td>{{ report.metadata.scan_duration_seconds }}</td></tr>
+    </table>
+
+    <h2>Summary</h2>
+    <table class="meta-table">
+        <tr><td>Total Assets</td><td>{{ report.summary.total_assets }}</td></tr>
+    </table>
+
+    {% if report.summary.assets_by_type %}
+    <h3>Assets by Type</h3>
+    <table class="meta-table">
+        {% for type, count in report.summary.assets_by_type.items() %}
+        <tr><td>{{ type }}</td><td>{{ count }}</td></tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if report.summary.assets_by_risk %}
+    <h3>Assets by Risk Level</h3>
+    <table class="meta-table">
+        {% for risk, count in report.summary.assets_by_risk.items() %}
+        <tr><td class="{{ risk }}">{{ risk }}</td><td>{{ count }}</td></tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    <h2>Assets</h2>
+    {% if report.assets %}
+    <table>
+        <thead>
+            <tr>
+                <th>IP</th>
+                <th>Hostname</th>
+                <th>Type</th>
+                <th>OS</th>
+                <th>Risk Level</th>
+                <th>Ports</th>
+                <th>Services</th>
+                <th>Vulnerabilities</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asset in report.assets %}
+            <tr>
+                <td>{{ asset.ip }}</td>
+                <td>{{ asset.hostname or '' }}</td>
+                <td>{{ asset.asset_type }}</td>
+                <td>{{ asset.os or '' }}</td>
+                <td class="{{ asset.risk_level }}">{{ asset.risk_level }}</td>
+                <td>{{ asset.ports | join(', ') }}</td>
+                <td>{{ asset.services | length }}</td>
+                <td>{{ asset.vulnerabilities | length }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No assets discovered.</p>
+    {% endif %}
+</body>
+</html>

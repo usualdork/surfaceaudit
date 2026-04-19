@@ -1,0 +1,61 @@
+# SurfaceAudit — Scheduled External Attack Surface Scan
+# Copy this workflow into your repository's .github/workflows/ directory.
+# Configure the SHODAN_API_KEY secret and scan targets, then enable the workflow.
+
+name: SurfaceAudit Scan
+
+on:
+  schedule:
+    # Weekly scan — every Monday at 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      targets:
+        description: "Comma-separated list of scan targets (domains or IPs)"
+        required: true
+        default: "example.com"
+
+permissions:
+  security-events: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SurfaceAudit
+        run: pip install surfaceaudit
+
+      - name: Run scan
+        env:
+          SHODAN_API_KEY: ${{ secrets.SHODAN_API_KEY }}
+        run: |
+          surfaceaudit scan \
+            --api-key "$SHODAN_API_KEY" \
+            --targets "${{ github.event.inputs.targets || 'example.com' }}" \
+            --output-format sarif \
+            --output-file results.sarif
+
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+          category: surfaceaudit
+
+  watch:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install SurfaceAudit
+        run: pip install surfaceaudit
+
+      - name: Run watch
+        env:
+          SHODAN_API_KEY: ${{ secrets.SHODAN_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: |
+          surfaceaudit watch --config surfaceaudit-config.yaml

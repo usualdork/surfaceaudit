@@ -1,0 +1,19 @@
+id: v2-cls-iot-device
+info:
+  name: IoT Device
+  author: surfaceaudit
+  severity: info
+  tags: [classification]
+  description: "Classifies asset as an IoT device based on ports and banner keywords"
+match:
+  condition: or
+  matchers:
+    - type: port
+      ports: [1883, 8883]
+    - type: word
+      field: banner
+      words: [mqtt, coap, zigbee]
+assess:
+  category: iot_device
+  severity: info
+  description: "Asset classified as IoT device"

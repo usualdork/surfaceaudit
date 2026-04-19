@@ -1,0 +1,166 @@
+rules:
+  # Risky ports (MEDIUM severity)
+  - id: assess-risky-ftp
+    name: FTP Exposed
+    match:
+      ports: [21]
+    severity: medium
+    category: risky_port
+    description: "Risky port 21 (FTP) is open"
+    details_template:
+      port: 21
+      protocol: FTP
+
+  - id: assess-risky-telnet
+    name: Telnet Exposed
+    match:
+      ports: [23]
+    severity: medium
+    category: risky_port
+    description: "Risky port 23 (Telnet) is open"
+    details_template:
+      port: 23
+      protocol: Telnet
+
+  - id: assess-risky-smb
+    name: SMB Exposed
+    match:
+      ports: [445]
+    severity: medium
+    category: risky_port
+    description: "Risky port 445 (SMB) is open"
+    details_template:
+      port: 445
+      protocol: SMB
+
+  - id: assess-risky-rdp
+    name: RDP Exposed
+    match:
+      ports: [3389]
+    severity: medium
+    category: risky_port
+    description: "Risky port 3389 (RDP) is open"
+    details_template:
+      port: 3389
+      protocol: RDP
+
+  - id: assess-risky-vnc
+    name: VNC Exposed
+    match:
+      ports: [5900]
+    severity: medium
+    category: risky_port
+    description: "Risky port 5900 (VNC) is open"
+    details_template:
+      port: 5900
+      protocol: VNC
+
+  # Admin interfaces (HIGH severity)
+  - id: assess-admin-http-proxy
+    name: HTTP Proxy/Admin Exposed
+    match:
+      ports: [8080]
+    severity: high
+    category: admin_interface
+    description: "Exposed admin interface on port 8080 (HTTP Proxy/Admin)"
+    details_template:
+      port: 8080
+      interface: "HTTP Proxy/Admin"
+
+  - id: assess-admin-https
+    name: HTTPS Admin Exposed
+    match:
+      ports: [8443]
+    severity: high
+    category: admin_interface
+    description: "Exposed admin interface on port 8443 (HTTPS Admin)"
+    details_template:
+      port: 8443
+      interface: "HTTPS Admin"
+
+  - id: assess-admin-mgmt-console
+    name: Management Console Exposed
+    match:
+      ports: [9090]
+    severity: high
+    category: admin_interface
+    description: "Exposed admin interface on port 9090 (Management Console)"
+    details_template:
+      port: 9090
+      interface: "Management Console"
+
+  - id: assess-admin-elasticsearch
+    name: Elasticsearch Exposed
+    match:
+      ports: [9200]
+    severity: high
+    category: admin_interface
+    description: "Exposed admin interface on port 9200 (Elasticsearch)"
+    details_template:
+      port: 9200
+      interface: Elasticsearch
+
+  - id: assess-admin-kibana
+    name: Kibana Exposed
+    match:
+      ports: [5601]
+    severity: high
+    category: admin_interface
+    description: "Exposed admin interface on port 5601 (Kibana)"
+    details_template:
+      port: 5601
+      interface: Kibana
+
+  # Admin keyword detection (HIGH severity)
+  - id: assess-admin-keyword
+    name: Admin Interface Keyword
+    match:
+      banners: ["admin", "phpmyadmin", "webmin"]
+    severity: high
+    category: admin_interface
+    description: "Admin interface detected via banner keyword"
+
+  # Vulnerable version patterns (HIGH severity)
+  - id: assess-vuln-openssh
+    name: Vulnerable OpenSSH
+    match:
+      banners: ["openssh"]
+    severity: high
+    category: vulnerable_version
+    description: "OpenSSH version may be below safe threshold (8.0)"
+    details_template:
+      service: openssh
+      safe_version: "8.0"
+
+  - id: assess-vuln-apache
+    name: Vulnerable Apache
+    match:
+      banners: ["apache"]
+    severity: high
+    category: vulnerable_version
+    description: "Apache version may be below safe threshold (2.4)"
+    details_template:
+      service: apache
+      safe_version: "2.4"
+
+  - id: assess-vuln-nginx
+    name: Vulnerable Nginx
+    match:
+      banners: ["nginx"]
+    severity: high
+    category: vulnerable_version
+    description: "Nginx version may be below safe threshold (1.20)"
+    details_template:
+      service: nginx
+      safe_version: "1.20"
+
+  - id: assess-vuln-mysql
+    name: Vulnerable MySQL
+    match:
+      banners: ["mysql"]
+    severity: high
+    category: vulnerable_version
+    description: "MySQL version may be below safe threshold (8.0)"
+    details_template:
+      service: mysql
+      safe_version: "8.0"

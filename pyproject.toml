@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surfaceaudit"
+version = "0.1.0"
+description = "SurfaceAudit — Open-source external attack surface management. Know what attackers see."
+requires-python = ">=3.10"
+dependencies = [
+    "shodan",
+    "click",
+    "pydantic",
+    "pyyaml",
+    "jinja2",
+    "cryptography",
+    "rich",
+]
+
+[project.optional-dependencies]
+dev = [
+    "hypothesis",
+    "pytest",
+]
+
+[project.scripts]
+surfaceaudit = "surfaceaudit.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+include = ["surfaceaudit*"]

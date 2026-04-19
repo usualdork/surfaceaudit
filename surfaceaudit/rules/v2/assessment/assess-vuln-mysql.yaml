@@ -1,0 +1,21 @@
+id: v2-assess-vuln-mysql
+info:
+  name: Outdated MySQL
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, vulnerable_version]
+  description: "MySQL version {service_version} is below 8.0"
+match:
+  condition: and
+  matchers:
+    - type: word
+      field: banner
+      words: [mysql]
+    - type: version_compare
+      field: service_version
+      operator: lt
+      version: "8.0"
+assess:
+  category: vulnerable_version
+  severity: high
+  description: "MySQL version {service_version} is below 8.0"

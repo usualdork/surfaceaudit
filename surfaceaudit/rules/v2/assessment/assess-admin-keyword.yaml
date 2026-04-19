@@ -1,0 +1,17 @@
+id: v2-assess-admin-keyword
+info:
+  name: Admin Interface Keyword
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, admin_interface]
+  description: "Admin interface detected via banner keyword"
+match:
+  condition: and
+  matchers:
+    - type: word
+      field: banner
+      words: [admin, phpmyadmin, webmin]
+assess:
+  category: admin_interface
+  severity: high
+  description: "Admin interface detected via banner keyword"

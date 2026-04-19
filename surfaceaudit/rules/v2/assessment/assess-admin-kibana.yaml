@@ -1,0 +1,16 @@
+id: v2-assess-admin-kibana
+info:
+  name: Kibana Exposed
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, admin_interface]
+  description: "Exposed admin interface on port 5601 (Kibana)"
+match:
+  condition: and
+  matchers:
+    - type: port
+      ports: [5601]
+assess:
+  category: admin_interface
+  severity: high
+  description: "Exposed admin interface on port 5601 (Kibana)"

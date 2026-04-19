@@ -1,0 +1,16 @@
+id: v2-assess-risky-smb
+info:
+  name: SMB Exposed
+  author: surfaceaudit
+  severity: medium
+  tags: [assessment, risky_port]
+  description: "Risky port 445 (SMB) is open"
+match:
+  condition: and
+  matchers:
+    - type: port
+      ports: [445]
+assess:
+  category: risky_port
+  severity: medium
+  description: "Risky port 445 (SMB) is open"

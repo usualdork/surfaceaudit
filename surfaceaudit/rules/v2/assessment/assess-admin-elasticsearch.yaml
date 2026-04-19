@@ -1,0 +1,16 @@
+id: v2-assess-admin-elasticsearch
+info:
+  name: Elasticsearch Exposed
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, admin_interface]
+  description: "Exposed admin interface on port 9200 (Elasticsearch)"
+match:
+  condition: and
+  matchers:
+    - type: port
+      ports: [9200]
+assess:
+  category: admin_interface
+  severity: high
+  description: "Exposed admin interface on port 9200 (Elasticsearch)"

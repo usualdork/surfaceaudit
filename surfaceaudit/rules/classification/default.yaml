@@ -1,0 +1,28 @@
+rules:
+  - id: cls-web-server
+    name: Web Server
+    match:
+      ports: [80, 443, 8080, 8443]
+      banners: ["http", "nginx", "apache"]
+    asset_type: web_server
+
+  - id: cls-database
+    name: Database
+    match:
+      ports: [3306, 5432, 27017, 6379, 1433]
+      banners: ["mysql", "postgresql", "mongodb", "redis"]
+    asset_type: database
+
+  - id: cls-iot-device
+    name: IoT Device
+    match:
+      ports: [1883, 8883]
+      banners: ["mqtt", "coap", "zigbee"]
+    asset_type: iot_device
+
+  - id: cls-network-device
+    name: Network Device
+    match:
+      ports: [161, 162]
+      banners: ["snmp", "cisco", "mikrotik"]
+    asset_type: network_device

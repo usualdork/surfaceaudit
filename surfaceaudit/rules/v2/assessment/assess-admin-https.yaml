@@ -1,0 +1,16 @@
+id: v2-assess-admin-https
+info:
+  name: HTTPS Admin Exposed
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, admin_interface]
+  description: "Exposed admin interface on port 8443 (HTTPS Admin)"
+match:
+  condition: and
+  matchers:
+    - type: port
+      ports: [8443]
+assess:
+  category: admin_interface
+  severity: high
+  description: "Exposed admin interface on port 8443 (HTTPS Admin)"

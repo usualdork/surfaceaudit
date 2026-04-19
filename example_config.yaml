@@ -1,0 +1,50 @@
+# SurfaceAudit — Example Configuration
+# Copy this file and replace placeholder values with your own.
+# Environment variables (${VAR_NAME}) are resolved automatically.
+
+api_key: "${SHODAN_API_KEY}"
+targets:
+  - "hostname:example.com"
+  - "hostname:api.example.com"
+provider: shodan
+output_format: json
+output_file: scan_results.json
+rate_limit_delay: 1.5
+
+# Threat intelligence enrichment (optional)
+enrichment:
+  enabled: true
+  providers:
+    crtsh:
+      enabled: true
+    virustotal:
+      enabled: true
+      api_key: "${VT_API_KEY}"
+    greynoise:
+      enabled: true
+      api_key: "${GREYNOISE_API_KEY}"
+    abuseipdb:
+      enabled: true
+      api_key: "${ABUSEIPDB_API_KEY}"
+  cache_dir: ".surfaceaudit/cache"
+  cache_ttl_hours: 24
+
+# AI-powered analysis (optional — auto-enabled when API key is set)
+ai:
+  enabled: true
+  api_key: "${GEMINI_API_KEY}"
+  model: "gemma-4-31b-it"
+
+# Watch mode — continuous monitoring with notifications
+watch:
+  history_dir: ".surfaceaudit/history"
+  notifications:
+    - type: slack
+      webhook_url: "${SLACK_WEBHOOK_URL}"
+      on: [new_assets, risk_increase]
+    - type: discord
+      webhook_url: "${DISCORD_WEBHOOK_URL}"
+      on: []  # empty = all events
+    - type: webhook
+      url: "${CUSTOM_WEBHOOK_URL}"
+      on: [new_assets, removed_assets, risk_increase]

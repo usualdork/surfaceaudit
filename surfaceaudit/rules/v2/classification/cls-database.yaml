@@ -1,0 +1,19 @@
+id: v2-cls-database
+info:
+  name: Database
+  author: surfaceaudit
+  severity: info
+  tags: [classification]
+  description: "Classifies asset as a database based on ports and banner keywords"
+match:
+  condition: or
+  matchers:
+    - type: port
+      ports: [3306, 5432, 27017, 6379, 1433]
+    - type: word
+      field: banner
+      words: [mysql, postgresql, mongodb, redis]
+assess:
+  category: database
+  severity: info
+  description: "Asset classified as database"

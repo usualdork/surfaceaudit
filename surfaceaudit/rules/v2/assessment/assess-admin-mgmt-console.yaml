@@ -1,0 +1,16 @@
+id: v2-assess-admin-mgmt-console
+info:
+  name: Management Console Exposed
+  author: surfaceaudit
+  severity: high
+  tags: [assessment, admin_interface]
+  description: "Exposed admin interface on port 9090 (Management Console)"
+match:
+  condition: and
+  matchers:
+    - type: port
+      ports: [9090]
+assess:
+  category: admin_interface
+  severity: high
+  description: "Exposed admin interface on port 9090 (Management Console)"
